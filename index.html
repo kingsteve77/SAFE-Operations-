@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1422">
+<title>Work Permit System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b1422;--blue:#2864e8;--blue2:#eaf1ff;--ink:#172235;--muted:#718096;--line:#e4eaf1;--bg:#f3f6fa;--white:#fff;--green:#13865c;--red:#c33b4b;--shadow:0 12px 34px rgba(25,45,75,.07)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);padding-bottom:88px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,a:focus-visible{outline:3px solid #7ea4f7;outline-offset:2px}
+.top{background:var(--navy);color:#fff;padding:calc(18px + env(safe-area-inset-top)) 20px 18px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:13px}
+.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#16b9dc,#2864e8);display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 8px 18px #0b63c955}
+.brand h1{font-size:18px;letter-spacing:.04em;margin:0;font-weight:800}
+.brand p{font-size:11px;letter-spacing:.22em;color:#aab8ce;margin:7px 0 0}
+.iconbtn{width:46px;height:46px;border:1px solid #344154;border-radius:15px;background:#142033;color:#fff;font-size:20px}
+main{max-width:1100px;margin:auto;padding:25px 18px}
+.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--blue);font-weight:800}
+.hero h2{font-size:clamp(27px,5vw,38px);margin:12px 0 8px;letter-spacing:-.045em}
+.hero p{margin:0;color:var(--muted);font-size:16px;line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:26px 0 18px}
+.stat{background:#fff;border:1px solid var(--line);border-radius:25px;padding:19px 17px;box-shadow:var(--shadow);min-height:142px}
+.stathead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;font-weight:700}
+.staticon{width:42px;height:42px;border-radius:15px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-size:20px}
+.stat strong{display:block;font-size:31px;margin:12px 0 5px}.stat small{color:var(--muted);font-size:12px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 26px}
+.action{border:1px solid var(--line);background:#fff;border-radius:18px;padding:15px 8px;font-weight:800;color:#34445a;min-height:68px;box-shadow:0 5px 15px #182b4610}
+.action.primary{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 10px 20px #2864e82b}
+.tabs{display:flex;overflow:auto;gap:24px;border-bottom:1px solid var(--line);white-space:nowrap;margin:10px 0 20px}
+.tab{border:0;background:none;padding:15px 8px;color:#77869a;font-weight:750;border-bottom:3px solid transparent}
+.tab.active{color:var(--blue);border-color:var(--blue)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}
+.panel.inner{box-shadow:none;background:#fbfcfe;margin:14px 0 0}
+.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.panel h3{margin:0;font-size:17px}.panel h4{margin:0 0 8px}
+.muted{color:var(--muted)}.small{font-size:12px}
+.list{display:grid;gap:10px}
+.record{border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start;background:#fff;width:100%;text-align:left;color:inherit}
+button.record:hover{border-color:#b9cdf7}
+.record h4{margin:0 0 6px;font-size:14px}.record p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}
+.record.unread{border-color:#f0c985;background:#fffaf1}
+.pill{display:inline-block;padding:6px 9px;border-radius:999px;background:#edf2f8;color:#53647a;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em;white-space:nowrap}
+.pill.green{background:#e4f6ee;color:#13784f}.pill.orange{background:#fff2dc;color:#9a5b00}.pill.red{background:#ffeaec;color:#b52d3e}.pill.blue{background:#e6eeff;color:#2250b8}
+.field{display:grid;gap:7px;margin:13px 0}
+.field label{font-size:12px;font-weight:750;color:#526176}
+.field input,.field select,.field textarea{width:100%;border:1px solid #dce4ee;background:#fbfcfe;border-radius:13px;padding:13px;color:var(--ink);outline:none}
+.field textarea{min-height:90px;resize:vertical}
+.field input:focus,.field select:focus,.field textarea:focus{border-color:#7ea4f7;box-shadow:0 0 0 3px #2864e818}
+.row2{display:grid;grid-template-columns:1fr;gap:0 12px}
+.btn{border:0;border-radius:13px;padding:13px 17px;background:var(--blue);color:#fff;font-weight:800}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.btn.secondary{background:#edf2f8;color:#34445a}.btn.danger{background:#fff0f1;color:var(--red)}.btn.green{background:var(--green)}.btn.link{background:none;color:var(--blue);padding:8px 4px}
+.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}
+.hidden{display:none!important}
+.notice{padding:12px 14px;border-radius:13px;background:#edf3ff;color:#315ca8;font-size:12px;line-height:1.5;margin:12px 0}
+.notice.error{background:#fff0f1;color:#a92e3e}.notice.success{background:#e8f7ef;color:#14764f}.notice.warn{background:#fff6e4;color:#8a5600}
+.toast{position:fixed;left:14px;right:14px;bottom:calc(92px + env(safe-area-inset-bottom));max-width:560px;margin:auto;z-index:30;box-shadow:0 12px 30px #0003}
+.auth{max-width:460px;margin:45px auto}.auth h2{margin-top:0}
+.empty{text-align:center;color:var(--muted);padding:30px 12px;font-size:13px}
+.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffef;backdrop-filter:blur(16px);border-top:1px solid var(--line);display:grid;grid-auto-flow:column;grid-auto-columns:1fr;padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:8}
+.bottom button{border:0;background:none;color:#8290a3;font-size:11px;font-weight:750;padding:6px;position:relative}
+.bottom button span.ic{display:block;font-size:21px;margin-bottom:4px}.bottom button.active{color:var(--blue)}
+.badge{position:absolute;top:0;left:56%;background:var(--red);color:#fff;border-radius:999px;font-size:10px;min-width:17px;height:17px;line-height:17px;font-style:normal;padding:0 4px}
+.modalback{position:fixed;inset:0;background:#09132299;z-index:20;display:grid;place-items:end center;padding:14px}
+.modal{background:#fff;border-radius:25px 25px 18px 18px;width:min(100%,640px);max-height:90vh;overflow:auto;padding:22px;box-shadow:0 20px 60px #0004}
+.modalhead{display:flex;justify-content:space-between;align-items:center;gap:10px}.modalhead h3{margin:0}
+.close{border:0;background:#edf2f8;border-radius:12px;padding:8px 12px;font-size:18px}
+.filters{display:grid;grid-template-columns:1fr;gap:10px;margin-bottom:14px}
+.filters input,.filters select{border:1px solid #dce4ee;background:#fbfcfe;border-radius:13px;padding:12px;width:100%}
+.steps{display:flex;gap:6px;margin:16px 0;overflow:auto}
+.step{flex:1;min-width:76px;text-align:center;font-size:11px;font-weight:750;color:#8a98ab;border-top:4px solid #e1e8f1;padding-top:8px}
+.step.done{color:var(--green);border-color:var(--green)}.step.now{color:var(--blue);border-color:var(--blue)}
+dl.kv{display:grid;grid-template-columns:1fr 1fr;gap:12px 14px;margin:14px 0}
+dl.kv dt{font-size:11px;font-weight:750;color:var(--muted);margin-bottom:3px}dl.kv dd{margin:0;font-size:13px;word-break:break-word}
+.block{margin:14px 0}.block h5{margin:0 0 6px;font-size:12px;color:#526176}
+.pre{white-space:pre-wrap;font-size:13px;line-height:1.55}
+.files{display:grid;gap:8px}
+.files a{display:flex;align-items:center;gap:8px;border:1px solid var(--line);border-radius:12px;padding:11px 12px;color:var(--blue);font-weight:700;font-size:13px;text-decoration:none;word-break:break-all}
+.sigimg{height:70px;max-width:100%;border:1px solid var(--line);border-radius:10px;background:#fff;margin-top:6px}
+.sigwrap canvas{display:block;width:100%;height:150px;border:1.5px dashed #9db3d6;border-radius:14px;background:#fff;touch-action:none}
+.timeline{display:grid;gap:10px;margin-top:8px}
+.tl{border-left:3px solid var(--line);padding:2px 0 2px 12px;font-size:12px;line-height:1.5}
+.tl b{font-size:13px}
+.usercard{display:grid;gap:10px}
+.usercontrols{display:grid;grid-template-columns:1fr;gap:8px;width:100%}
+.usercontrols input,.usercontrols select{border:1px solid #dce4ee;background:#fbfcfe;border-radius:11px;padding:10px;width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:13px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}.actions{max-width:650px}.modalback{place-items:center}.modal{border-radius:24px}.row2{grid-template-columns:1fr 1fr}.filters{grid-template-columns:2fr 1fr}.usercontrols{grid-template-columns:1.2fr 1fr 1fr auto auto}}
+@media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="brand"><div class="logo">✦</div><div><h1>WORK PERMIT SYSTEM</h1><p>SAFETY • CONTROL • COMPLIANCE</p></div></div>
+ <button class="iconbtn" id="refreshBtn" aria-label="Refresh data">↻</button>
+</header>
+<main>
+ <!-- Sign in -->
+ <section id="authView" class="auth panel">
+  <h2>Sign in</h2><p class="muted">Sign in with your Work Permit System account. Accounts are created by your administrator.</p><div class="notice">Open this page from your published GitHub Pages HTTPS website. iPhone file preview does not run the sign-in and database scripts.</div>
+  <form id="loginForm">
+   <div class="field"><label for="email">Email</label><input id="email" type="email" required autocomplete="username"></div>
+   <div class="field"><label for="password">Password</label><input id="password" type="password" required autocomplete="current-password"></div>
+   <button class="btn" id="loginBtn" style="width:100%">Sign in</button>
+  </form>
+  <div class="btnrow" style="justify-content:center"><button class="btn link" id="forgotBtn" type="button">Forgot password?</button></div>
+  <div id="authMsg" class="notice hidden"></div>
+ </section>
+ <!-- Set new password (from reset e-mail) -->
+ <section id="recoveryView" class="auth panel hidden">
+  <h2>Set a new password</h2><p class="muted">Choose a password with at least 8 characters.</p>
+  <form id="recoveryForm">
+   <div class="field"><label for="newPass">New password</label><input id="newPass" type="password" minlength="8" required autocomplete="new-password"></div>
+   <div class="field"><label for="newPass2">Repeat new password</label><input id="newPass2" type="password" minlength="8" required autocomplete="new-password"></div>
+   <button class="btn" style="width:100%">Save new password</button>
+  </form>
+  <div id="recoveryMsg" class="notice hidden"></div>
+ </section>
+ <!-- Blocked account -->
+ <section id="blockedView" class="auth panel hidden">
+  <h2>Access unavailable</h2><p class="muted" id="blockedText"></p>
+  <button class="btn danger" id="blockedOut">Sign out</button>
+ </section>
+
+ <section id="appView" class="hidden">
+  <div class="hero"><div class="eyebrow" id="roleLabel">OPERATIONAL OVERVIEW</div><h2 id="pageTitle">Worksite dashboard</h2><p id="pageSubtitle"></p></div>
+  <div class="stats">
+   <div class="stat"><div class="stathead">Total permits <span class="staticon">▤</span></div><strong id="sTotal">—</strong><small id="sTotalNote">In your view</small></div>
+   <div class="stat"><div class="stathead">Pending review <span class="staticon">◷</span></div><strong id="sPending">—</strong><small>Submitted or PMC approved</small></div>
+   <div class="stat"><div class="stathead">Issued <span class="staticon">✓</span></div><strong id="sIssued">—</strong><small id="sIssuedNote">Permits in force</small></div>
+   <div class="stat"><div class="stathead">Open observations <span class="staticon">⚑</span></div><strong id="sObs">—</strong><small>Not yet closed</small></div>
+  </div>
+  <div id="expiryNote" class="notice warn hidden"></div>
+  <div class="actions">
+   <button class="action primary" id="raiseBtn">＋ Raise<br>work permit</button>
+   <button class="action" id="observationBtn">＋ Add<br>observation</button>
+   <button class="action" id="refreshDataBtn">↻ Refresh<br>data</button>
+  </div>
+  <nav class="tabs" id="topTabs"></nav>
+
+  <section id="dashboardPanel">
+   <div class="panel"><div class="panelhead"><h3 id="queueTitle">Needs your action</h3></div><div id="queueList" class="list"></div></div>
+   <div class="panel"><div class="panelhead"><h3>Recent work permits</h3><button class="btn secondary" data-goto="permits">View all</button></div><div id="recentPermits" class="list"></div></div>
+   <div class="panel"><div class="panelhead"><h3>Recent observations</h3><button class="btn secondary" data-goto="observations">View all</button></div><div id="recentObs" class="list"></div></div>
+  </section>
+
+  <section id="permitsPanel" class="hidden"><div class="panel">
+   <div class="panelhead"><h3>Work permits</h3><button class="btn" id="raiseBtn2">＋ New permit</button></div>
+   <div class="filters"><input id="permitSearch" type="search" placeholder="Search number, location, requester…" aria-label="Search permits">
+    <select id="permitStatus" aria-label="Filter by status"><option value="">All statuses</option><option>Draft</option><option>Submitted</option><option>PMC Approved</option><option>Approved</option><option>Issued</option><option>Suspended</option><option>Returned</option><option>Rejected</option><option>Closed</option><option>Cancelled</option></select></div>
+   <div id="permitList" class="list"></div></div></section>
+
+  <section id="observationsPanel" class="hidden"><div class="panel"><div class="panelhead"><h3>Safety observations</h3><button class="btn" id="observationBtn2">＋ Add</button></div><div id="observationList" class="list"></div></div></section>
+
+  <section id="notificationsPanel" class="hidden"><div class="panel"><div class="panelhead"><h3>Notifications</h3><button class="btn secondary" id="markReadBtn">Mark all as read</button></div><div id="notificationList" class="list"></div></div></section>
+
+  <section id="usersPanel" class="hidden"><div class="panel">
+   <div class="panelhead"><h3>Users &amp; roles</h3></div>
+   <div class="notice">To add a person: Supabase dashboard → Authentication → Users → <b>Add user</b> (tick “Auto confirm”). They appear here as <b>Contractor</b>; set their role and company, then save.</div>
+   <div class="filters"><input id="userSearch" type="search" placeholder="Search name, email or company…" aria-label="Search users"><span></span></div>
+   <div id="userList" class="list"></div></div></section>
+
+  <div class="panel" style="margin-top:18px"><div class="panelhead"><h3 id="userLabel">Signed in</h3><button class="btn danger" id="signOutBtn">Sign out</button></div><p class="muted" id="scopeLabel" style="font-size:12px;margin:0"></p></div>
+ </section>
+</main>
+<div id="globalMsg" class="notice toast hidden" role="status"></div>
+<nav class="bottom hidden" id="bottomNav" aria-label="Main"></nav>
+<div id="modalBack" class="modalback hidden"><div class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="modalhead"><h3 id="modalTitle">Record</h3><button class="close" id="closeModal" aria-label="Close">✕</button></div><div id="modalBody"></div></div></div>
+
+<script>
+(async () => {
+'use strict';
+/* ------------------------------------------------------------------ config */
+const SUPABASE_URL = 'https://pnpvfaveaautvmzuahoh.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_v0JmfgjC2Fi1KG5nUw-hrw_babSM3Ig'; // publishable key only - never put a secret key here
+const BUCKET = 'permit-files';
+const MAX_FILE = 10 * 1024 * 1024;
+const PERMIT_TYPES = ['Hot Work','Work at Height','Confined Space','Electrical Work','Excavation','General Work','Other'];
+const ROLE_LABEL = {admin:'Administrator',pmc:'PMC / Client engineer',safety:'Safety department',contractor:'Contractor'};
+const STAFF = ['admin','pmc','safety'];
+const LABEL = {pmc_approve:'Approve (PMC)',safety_approve:'Approve (Safety)',return:'Return for changes',reject:'Reject',issue:'Issue permit',suspend:'Suspend permit',resume:'Resume permit',close:'Close permit',cancel:'Cancel permit'};
+const NEEDS_SIG = new Set(['pmc_approve','safety_approve','issue']);
+const NEEDS_COMMENT = new Set(['return','reject','suspend']);
+const ACTION_WORD = {submit:'Submitted',resubmit:'Resubmitted',pmc_approve:'Approved by PMC',safety_approve:'Approved by Safety',return:'Returned for changes',reject:'Rejected',issue:'Issued',suspend:'Suspended',resume:'Resumed',close:'Closed',cancel:'Cancelled'};
+
+const $ = id => document.getElementById(id);
+const esc = v => String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const dateText = v => { if(!v) return ''; const d=new Date(v); return isNaN(d)?String(v):d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'}); };
+const toLocal = iso => { if(!iso) return ''; const d=new Date(iso), p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+const fromLocal = v => v ? new Date(v).toISOString() : null;
+const safeName = n => String(n).replace(/[^A-Za-z0-9._-]+/g,'_').slice(-80) || 'file';
+
+function loadSdk(url){return new Promise((res,rej)=>{const s=document.createElement('script');s.src=url;s.onload=()=>window.supabase?res():rej(new Error('Library did not initialise'));s.onerror=()=>rej(new Error('Could not load '+url));document.head.appendChild(s);});}
+function show(view){['authView','recoveryView','blockedView','appView'].forEach(v=>$(v).classList.toggle('hidden',v!==view));$('bottomNav').classList.toggle('hidden',view!=='appView');}
+let toastTimer;
+function toast(msg,type=''){const el=$('globalMsg');el.textContent=msg;el.className='notice toast '+type;clearTimeout(toastTimer);if(type!=='error')toastTimer=setTimeout(()=>el.classList.add('hidden'),5000);}
+function inlineMsg(id,msg,type){const el=$(id);el.textContent=msg;el.className='notice '+(type||'');}
+
+try{ if(!window.supabase){ try{await loadSdk('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js');}catch(e){await loadSdk('https://unpkg.com/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js');} } }
+catch(e){ show('authView'); inlineMsg('authMsg','The sign-in service could not start because the Supabase library could not be downloaded. Check your internet connection and refresh. ('+e.message+')','error'); return; }
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+/* ------------------------------------------------------------------ state */
+let user=null, profile=null, permits=[], observations=[], notifications=[], stats={}, users=[];
+let activeTab='dashboard', recovering=/type=recovery/.test(location.hash), booting=false, pollTimer=null;
+
+/* ------------------------------------------------------------------ helpers */
+const statusClass = s => ({Approved:'green',Issued:'green',Closed:'green','PMC Approved':'blue',Rejected:'red',Cancelled:'red',Suspended:'red',Critical:'red',High:'orange',Open:'orange',Draft:'',Submitted:'orange',Returned:'orange'}[s]||'');
+const isExpired = p => p.status==='Issued' && p.planned_end && new Date(p.planned_end) < new Date();
+const isStaff = () => STAFF.includes(profile?.role);
+const isOwner = p => p.created_by === user?.id;
+function needsMyAction(p){
+ const r=profile.role,s=p.status;
+ if(s==='Submitted') return ['pmc','admin'].includes(r);
+ if(s==='PMC Approved') return ['safety','admin'].includes(r);
+ if(s==='Approved') return ['pmc','admin'].includes(r);
+ if(s==='Returned'||s==='Draft') return isOwner(p);
+ return false;
+}
+function availableActions(p){
+ const r=profile.role,s=p.status,a=[];
+ if(s==='Submitted'&&['pmc','admin'].includes(r)) a.push('pmc_approve','return','reject');
+ if(s==='PMC Approved'&&['safety','admin'].includes(r)) a.push('safety_approve','return','reject');
+ if(s==='Approved'&&['pmc','admin'].includes(r)) a.push('issue');
+ if(s==='Issued'&&['safety','admin'].includes(r)) a.push('suspend');
+ if(s==='Suspended'&&['safety','admin'].includes(r)) a.push('resume');
+ if(['Issued','Suspended'].includes(s)&&STAFF.includes(r)) a.push('close');
+ if((isOwner(p)&&['Draft','Submitted','Returned'].includes(s))||(r==='admin'&&['Draft','Submitted','Returned','PMC Approved','Approved'].includes(s))) a.push('cancel');
+ return a;
+}
+async function rpc(name,args){const {data,error}=await db.rpc(name,args);if(error)throw new Error(error.message);return data;}
+
+/* ------------------------------------------------------------------ tabs / nav */
+function tabList(){
+ const t=[['dashboard','Home','⌂'],['permits','Permits','▤'],['observations','Safety','⚑'],['notifications','Alerts','♧']];
+ if(profile?.role==='admin') t.push(['users','Users','☺']);
+ return t;
+}
+function buildNav(){
+ const unread=notifications.filter(n=>!n.read_at).length;
+ $('topTabs').innerHTML=tabList().map(([k,l])=>`<button class="tab ${k===activeTab?'active':''}" data-tab="${k}">${l}</button>`).join('');
+ $('bottomNav').innerHTML=tabList().map(([k,l,i])=>`<button class="${k===activeTab?'active':''}" data-tab="${k}"><span class="ic">${i}</span>${l}${k==='notifications'&&unread?`<i class="badge">${unread>99?'99+':unread}</i>`:''}</button>`).join('');
+ document.querySelectorAll('[data-tab]').forEach(b=>b.onclick=()=>setTab(b.dataset.tab));
+}
+const TITLES={dashboard:'Worksite dashboard',permits:'Work permits',observations:'Safety observations',notifications:'Notifications',users:'Users & roles'};
+function setTab(tab){
+ activeTab=tab;
+ ['dashboard','permits','observations','notifications','users'].forEach(t=>$(t+'Panel').classList.toggle('hidden',t!==tab));
+ $('pageTitle').textContent=TITLES[tab];
+ $('pageSubtitle').textContent={dashboard:isStaff()?'All permits and observations across the project.':'Raise permits and follow the ones you submitted.',permits:isStaff()?'Every permit in the system.':'Permits you have raised.',observations:isStaff()?'Every safety observation.':'Observations you have reported.',notifications:'Updates that need your attention.',users:'Manage who can sign in and what they can do.'}[tab];
+ buildNav(); window.scrollTo({top:0});
+ if(tab==='users') loadUsers();
+}
+
+/* ------------------------------------------------------------------ rendering */
+function permitCard(p){
+ const sub=[p.permit_type,p.work_location,isStaff()?p.requester_name:'',dateText(p.created_at)].filter(Boolean).join(' • ');
+ const exp=isExpired(p)?'<span class="pill red" style="margin-left:6px">Expired</span>':'';
+ return `<button class="record" data-permit="${esc(p.id)}"><div><h4>${esc(p.permit_number||'Work permit')}</h4><p>${esc(sub)}</p></div><div style="text-align:right"><span class="pill ${statusClass(p.status)}">${esc(p.status)}</span>${exp}</div></button>`;
+}
+function obsCard(o){
+ const sub=[o.category,o.location,isStaff()?o.reporter_name:'',dateText(o.created_at)].filter(Boolean).join(' • ');
+ return `<button class="record" data-obs="${esc(o.id)}"><div><h4>${esc(o.title||'Observation')}</h4><p>${esc(sub)}</p></div><div style="text-align:right"><span class="pill ${statusClass(o.severity)}">${esc(o.severity||'')}</span><br><span class="pill ${statusClass(o.status)}" style="margin-top:6px">${esc(o.status||'Open')}</span></div></button>`;
+}
+function fill(id,rows,fn,emptyText){const el=$(id);el.innerHTML=rows.length?rows.map(fn).join(''):`<div class="empty">${emptyText}</div>`;}
+function renderAll(){
+ $('roleLabel').textContent=(ROLE_LABEL[profile.role]||'').toUpperCase();
+ $('sTotal').textContent=stats.total??'—';$('sPending').textContent=stats.pending??'—';$('sIssued').textContent=stats.issued??'—';$('sObs').textContent=stats.open_obs??'—';
+ $('sTotalNote').textContent=isStaff()?'All permits':'Permits you raised';
+ const warn=[];if(stats.expiring)warn.push(`${stats.expiring} permit(s) expire within 24 hours`);if(stats.expired)warn.push(`${stats.expired} issued permit(s) are past their end time`);
+ $('expiryNote').classList.toggle('hidden',!warn.length);$('expiryNote').textContent=warn.join(' • ');
+ const q=permits.filter(needsMyAction);
+ $('queueTitle').textContent=isStaff()?'Waiting for your action':'Needs your attention';
+ fill('queueList',q.slice(0,10),permitCard,isStaff()?'Nothing is waiting for you.':'No drafts or returned permits.');
+ fill('recentPermits',permits.slice(0,4),permitCard,isStaff()?'No permits yet.':'You have not raised any permits yet.');
+ fill('recentObs',observations.slice(0,4),obsCard,'No observations yet.');
+ renderPermitList();
+ fill('observationList',observations,obsCard,'No observations yet.');
+ fill('notificationList',notifications,n=>`<button class="record ${n.read_at?'':'unread'}" ${n.permit_id?`data-permit="${esc(n.permit_id)}"`:''}><div><h4>${esc(n.subject)}</h4><p>${esc(n.message||'')}<br>${esc(dateText(n.created_at))}</p></div><span class="pill ${n.read_at?'':'orange'}">${n.read_at?'Read':'New'}</span></button>`,'No notifications yet.');
+ $('userLabel').textContent=profile.full_name||user.email;
+ $('scopeLabel').textContent=`${ROLE_LABEL[profile.role]||profile.role}${profile.company?' • '+profile.company:''} • ${user.email}`;
+ buildNav(); bindCards();
+}
+function renderPermitList(){
+ const t=($('permitSearch').value||'').toLowerCase().trim(), s=$('permitStatus').value;
+ const rows=permits.filter(p=>(!s||p.status===s)&&(!t||[p.permit_number,p.work_location,p.permit_type,p.requester_name,p.contractor_company].some(x=>String(x||'').toLowerCase().includes(t))));
+ fill('permitList',rows,permitCard,permits.length?'No permits match your filter.':(isStaff()?'No permits yet.':'You have not raised any permits yet.'));
+ bindCards();
+}
+function bindCards(){
+ document.querySelectorAll('[data-permit]').forEach(b=>b.onclick=()=>openPermit(b.dataset.permit));
+ document.querySelectorAll('[data-obs]').forEach(b=>b.onclick=()=>openObservation(b.dataset.obs));
+}
+
+/* ------------------------------------------------------------------ data loading */
+async function loadAll(){
+ const [p,o,n,s]=await Promise.all([
+  db.from('permits').select('*').order('created_at',{ascending:false}).limit(500),
+  db.from('daily_observations').select('*').order('created_at',{ascending:false}).limit(500),
+  db.from('app_notifications').select('*').order('created_at',{ascending:false}).limit(100),
+  db.rpc('dashboard_stats')]);
+ if(p.error) throw new Error('Permits could not load: '+p.error.message);
+ if(o.error) throw new Error('Observations could not load: '+o.error.message);
+ if(n.error) throw new Error('Notifications could not load: '+n.error.message);
+ if(s.error) throw new Error('Dashboard could not load: '+s.error.message);
+ permits=p.data||[];observations=o.data||[];notifications=n.data||[];stats=s.data||{};
+ renderAll();
+}
+async function pollNotifications(){
+ if(!user||document.hidden)return;
+ const {data}=await db.from('app_notifications').select('*').order('created_at',{ascending:false}).limit(100);
+ if(!data)return;
+ const prev=notifications.filter(n=>!n.read_at).length, now=data.filter(n=>!n.read_at).length;
+ notifications=data; if(now>prev){toast('You have new notifications.');loadAll().catch(()=>{});} else {renderAll();}
+}
+
+/* ------------------------------------------------------------------ boot / auth */
+async function boot(){
+ if(booting)return;booting=true;
+ try{
+  const {data:{session}}=await db.auth.getSession();
+  if(!session){user=null;profile=null;show('authView');return;}
+  if(recovering){show('recoveryView');return;}
+  user=session.user;
+  const {data,error}=await db.from('profiles').select('*').eq('id',user.id).maybeSingle();
+  if(error||!data){blocked('Your account has no profile yet. Ask an administrator to check your access.');return;}
+  if(!data.active){blocked('Your account has been deactivated. Contact an administrator.');return;}
+  profile=data;show('appView');
+  setTab(activeTab==='users'&&profile.role!=='admin'?'dashboard':activeTab);
+  await loadAll();
+  clearInterval(pollTimer);pollTimer=setInterval(pollNotifications,60000);
+ }catch(e){show('authView');inlineMsg('authMsg','Unable to start the application: '+(e?.message||String(e))+'. Refresh the published website and check Supabase connectivity.','error');}
+ finally{booting=false;}
+}
+function blocked(text){$('blockedText').textContent=text;show('blockedView');}
+
+$('loginForm').onsubmit=async e=>{
+ e.preventDefault();const btn=$('loginBtn');btn.disabled=true;$('authMsg').classList.add('hidden');
+ const {error}=await db.auth.signInWithPassword({email:$('email').value.trim(),password:$('password').value});
+ btn.disabled=false;
+ if(error){inlineMsg('authMsg',/invalid login/i.test(error.message)?'Email or password is not correct.':error.message,'error');return;}
+ $('password').value='';
+};
+$('forgotBtn').onclick=async()=>{
+ const email=$('email').value.trim();
+ if(!email){inlineMsg('authMsg','Enter your email above, then tap “Forgot password?”.','warn');return;}
+ const {error}=await db.auth.resetPasswordForEmail(email,{redirectTo:location.origin+location.pathname});
+ if(error){inlineMsg('authMsg',error.message,'error');return;}
+ inlineMsg('authMsg','If an account exists for that email, a reset link has been sent. Open it on this device.','success');
+};
+$('recoveryForm').onsubmit=async e=>{
+ e.preventDefault();
+ if($('newPass').value!==$('newPass2').value){inlineMsg('recoveryMsg','The two passwords do not match.','error');return;}
+ const {error}=await db.auth.updateUser({password:$('newPass').value});
+ if(error){inlineMsg('recoveryMsg',error.message,'error');return;}
+ recovering=false;history.replaceState(null,'',location.pathname);$('newPass').value=$('newPass2').value='';
+ toast('Password updated.','success');await boot();
+};
+async function signOut(){await db.auth.signOut();user=null;profile=null;clearInterval(pollTimer);show('authView');}
+$('signOutBtn').onclick=signOut;$('blockedOut').onclick=signOut;
+db.auth.onAuthStateChange((ev,session)=>{
+ if(ev==='PASSWORD_RECOVERY'){recovering=true;show('recoveryView');return;}
+ if(ev==='SIGNED_OUT'){user=null;profile=null;show('authView');return;}
+ if(ev==='SIGNED_IN'&&!recovering&&session&&(!user||user.id!==session.user.id)) setTimeout(boot,0);
+});
+
+/* ------------------------------------------------------------------ modal */
+function openModal(title,html){$('modalTitle').textContent=title;$('modalBody').innerHTML=html;$('modalBack').classList.remove('hidden');$('modal'&&'modalBody');}
+function closeModal(){$('modalBack').classList.add('hidden');$('modalBody').innerHTML='';}
+$('closeModal').onclick=closeModal;
+$('modalBack').addEventListener('mousedown',e=>{if(e.target===$('modalBack'))closeModal();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!$('modalBack').classList.contains('hidden'))closeModal();});
+
+/* ------------------------------------------------------------------ signature pad */
+function sigBlock(id){return `<div class="block sigwrap"><h5>Signature *</h5><canvas id="${id}" aria-label="Signature pad"></canvas><div class="btnrow" style="margin-top:8px"><button type="button" class="btn secondary" data-clearsig="${id}">Clear signature</button></div><p class="muted small" style="margin:6px 0 0">Sign with your finger or mouse. Your name, role and the time are recorded with it.</p></div>`;}
+function makePad(canvas){
+ const ratio=window.devicePixelRatio||1,r=canvas.getBoundingClientRect();
+ canvas.width=Math.round(r.width*ratio);canvas.height=Math.round(r.height*ratio);
+ const ctx=canvas.getContext('2d');ctx.scale(ratio,ratio);ctx.lineWidth=2.4;ctx.lineCap='round';ctx.lineJoin='round';ctx.strokeStyle='#0b1422';
+ let drawing=false,dirty=false;
+ const pos=e=>{const b=canvas.getBoundingClientRect();return{x:e.clientX-b.left,y:e.clientY-b.top};};
+ canvas.addEventListener('pointerdown',e=>{drawing=true;canvas.setPointerCapture(e.pointerId);const p=pos(e);ctx.beginPath();ctx.moveTo(p.x,p.y);ctx.lineTo(p.x+.1,p.y+.1);ctx.stroke();dirty=true;e.preventDefault();});
+ canvas.addEventListener('pointermove',e=>{if(!drawing)return;const p=pos(e);ctx.lineTo(p.x,p.y);ctx.stroke();e.preventDefault();});
+ ['pointerup','pointercancel','pointerleave'].forEach(t=>canvas.addEventListener(t,()=>{drawing=false;}));
+ const pad={isEmpty:()=>!dirty,clear(){ctx.save();ctx.setTransform(1,0,0,1,0,0);ctx.clearRect(0,0,canvas.width,canvas.height);ctx.restore();dirty=false;},
+  toBlob:()=>new Promise(res=>{const c=document.createElement('canvas');c.width=canvas.width;c.height=canvas.height;const x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);x.drawImage(canvas,0,0);c.toBlob(res,'image/png');})};
+ const btn=document.querySelector(`[data-clearsig="${canvas.id}"]`);if(btn)btn.onclick=()=>pad.clear();
+ return pad;
+}
+
+/* ------------------------------------------------------------------ storage */
+async function uploadFile(permitId,blobOrFile,name,prefix){
+ const path=`${permitId}/${prefix}-${Date.now()}-${crypto.randomUUID().slice(0,8)}-${safeName(name)}`;
+ const {error}=await db.storage.from(BUCKET).upload(path,blobOrFile,{contentType:blobOrFile.type||'application/octet-stream',upsert:false});
+ if(error)throw new Error(`Upload failed for ${name}: ${error.message}`);
+ return path;
+}
+async function signedUrls(paths){
+ const list=[...new Set(paths.filter(Boolean))];if(!list.length)return {};
+ const {data}=await db.storage.from(BUCKET).createSignedUrls(list,3600);
+ const map={};(data||[]).forEach(d=>{if(d.signedUrl)map[d.path]=d.signedUrl;});return map;
+}
+
+/* ------------------------------------------------------------------ permit form */
+function openPermitForm(existing){
+ const e=existing||{};
+ const prevAtt=Array.isArray(e.attachments)?e.attachments:[];
+ openModal(existing?`Edit ${e.permit_number}`:'Raise work permit',`<form id="permitForm" novalidate>
+  ${e.status==='Returned'?`<div class="notice warn">This permit was returned for changes. Update it, sign again and resubmit.</div>`:''}
+  <div class="field"><label for="f_type">Permit type *</label><select id="f_type" required><option value="">Select type</option>${PERMIT_TYPES.map(t=>`<option ${e.permit_type===t?'selected':''}>${t}</option>`).join('')}</select></div>
+  <div class="field"><label for="f_loc">Work location *</label><input id="f_loc" maxlength="300" value="${esc(e.work_location||'')}" placeholder="Area, unit, level"></div>
+  <div class="field"><label for="f_desc">Work description *</label><textarea id="f_desc" maxlength="4000" placeholder="Describe the planned work">${esc(e.description||'')}</textarea></div>
+  <div class="field"><label for="f_haz">Hazards identified</label><textarea id="f_haz" maxlength="4000" placeholder="Fire, falling objects, toxic gas, live electricity…">${esc(e.hazards||'')}</textarea></div>
+  <div class="field"><label for="f_prec">Precautions and controls</label><textarea id="f_prec" maxlength="4000" placeholder="PPE, isolation, fire watch, barricading, rescue plan…">${esc(e.precautions||'')}</textarea></div>
+  <div class="row2">
+   <div class="field"><label for="f_comp">Contractor company</label><input id="f_comp" value="${esc(e.contractor_company||profile.company||'')}"></div>
+   <div class="field"><label for="f_workers">Number of workers</label><input id="f_workers" type="number" min="0" max="10000" value="${esc(e.workers_count??'')}"></div>
+   <div class="field"><label for="f_start">Planned start *</label><input id="f_start" type="datetime-local" value="${toLocal(e.planned_start)}"></div>
+   <div class="field"><label for="f_end">Planned end *</label><input id="f_end" type="datetime-local" value="${toLocal(e.planned_end)}"></div>
+  </div>
+  <div class="field"><label for="f_pdf">Permit PDF (optional, max 10 MB)</label><input id="f_pdf" type="file" accept="application/pdf"></div>
+  <div class="field"><label for="f_sup">Supporting documents – risk assessment, method statement, certificates (PDF / photos, up to 10)</label><input id="f_sup" type="file" multiple accept="application/pdf,image/png,image/jpeg"></div>
+  ${prevAtt.length?`<p class="muted small">${prevAtt.length} file(s) already attached will be kept.</p>`:''}
+  ${sigBlock('permitSig')}
+  <div id="formErr" class="notice error hidden"></div>
+  <div class="btnrow"><button class="btn" type="submit" id="submitPermit">Sign &amp; submit permit</button><button class="btn secondary" type="button" id="saveDraft">Save draft</button><button class="btn secondary" type="button" id="cancelForm">Cancel</button></div>
+ </form>`);
+ const pad=makePad($('permitSig'));
+ $('cancelForm').onclick=closeModal;
+ const contractorMode = profile && profile.role === 'contractor';
+ const localDateTime = d => { const p=n=>String(n).padStart(2,'0'); return `${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}T${p(d.getHours())}:${p(d.getMinutes())}`; };
+ const startInput=$('f_start'), endInput=$('f_end');
+ function applyContractorDateLimits(){
+  if(!contractorMode)return;
+  const today=new Date(); today.setHours(0,0,0,0);
+  startInput.min=localDateTime(today);
+  if(startInput.value){
+   const start=new Date(startInput.value);
+   if(!isNaN(start)){
+    endInput.min=startInput.value;
+    const latest=new Date(start); latest.setDate(latest.getDate()+7);
+    endInput.max=localDateTime(latest);
+   }
+  }else{endInput.removeAttribute('min');endInput.removeAttribute('max');}
+ }
+ startInput.addEventListener('change',applyContractorDateLimits);
+ applyContractorDateLimits();
+ const formErr=m=>{const el=$('formErr');el.textContent=m;el.classList.remove('hidden');el.scrollIntoView({block:'nearest'});};
+ function collect(){return {permit_type:$('f_type').value,work_location:$('f_loc').value.trim(),description:$('f_desc').value.trim(),hazards:$('f_haz').value.trim(),precautions:$('f_prec').value.trim(),contractor_company:$('f_comp').value.trim(),workers_count:$('f_workers').value,planned_start:fromLocal($('f_start').value),planned_end:fromLocal($('f_end').value)};}
+ function validate(v,full){
+  if(!v.permit_type)return 'Select a permit type.';if(!v.work_location)return 'Enter the work location.';if(!v.description)return 'Describe the work.';
+  if(v.planned_start&&v.planned_end&&new Date(v.planned_end)<=new Date(v.planned_start))return 'Planned end must be after planned start.';
+  if(contractorMode && $('f_start').value){
+   const today=new Date();today.setHours(0,0,0,0);
+   const start=new Date($('f_start').value);
+   if(start<today)return 'Contractors cannot select a past date. Choose today or a future date.';
+   if($('f_end').value){
+    const end=new Date($('f_end').value), latest=new Date(start);latest.setDate(latest.getDate()+7);
+    if(end>latest)return 'Contractor permits can have a maximum validity of 7 days from the planned start.';
+   }
+  }
+  const files=[...($('f_pdf').files||[]),...($('f_sup').files||[])];
+  if(($('f_sup').files||[]).length>10)return 'Attach at most 10 supporting files.';
+  for(const f of files){if(f.size>MAX_FILE)return `${f.name} is larger than 10 MB.`;}
+  for(const f of $('f_pdf').files)if(f.type!=='application/pdf')return 'The permit file must be a PDF.';
+  for(const f of $('f_sup').files)if(!['application/pdf','image/png','image/jpeg'].includes(f.type))return `${f.name} must be a PDF, PNG or JPG.`;
+  if(full){if(!v.planned_start||!v.planned_end)return 'Planned start and end are required to submit.';if(new Date(v.planned_end)<=new Date())return 'Planned end is already in the past.';if(pad.isEmpty())return 'Sign in the signature box to submit.';}
+  return '';
+ }
+ async function run(full){
+  $('formErr').classList.add('hidden');
+  const v=collect();const bad=validate(v,full);if(bad){formErr(bad);return;}
+  const btns=['submitPermit','saveDraft','cancelForm'].map($);btns.forEach(b=>b.disabled=true);
+  let id=e.id||null;
+  try{
+   id=await rpc('save_permit',{p_id:id,p:v});
+   if(!full){closeModal();toast('Draft saved.','success');await loadAll();return;}
+   const att=[...prevAtt];
+   for(const f of $('f_pdf').files){att.push({kind:'permit_pdf',name:f.name,size:f.size,path:await uploadFile(id,f,f.name,'permit')});}
+   for(const f of $('f_sup').files){att.push({kind:'supporting',name:f.name,size:f.size,path:await uploadFile(id,f,f.name,'support')});}
+   const sigPath=await uploadFile(id,await pad.toBlob(),'signature.png','sig');
+   await rpc('submit_permit',{p_id:id,p_attachments:att,p_signature_path:sigPath});
+   closeModal();toast('Permit submitted for PMC review.','success');await loadAll();
+  }catch(err){
+   btns.forEach(b=>b.disabled=false);
+   formErr(err.message+(id&&!e.id?' Your permit was saved as a draft – open it from the list to continue.':''));
+   if(id&&!e.id){e.id=id;loadAll().catch(()=>{});}
+  }
+ }
+ $('permitForm').onsubmit=ev=>{ev.preventDefault();run(true);};
+ $('saveDraft').onclick=()=>run(false);
+}
+
+/* ------------------------------------------------------------------ permit detail */
+const kv=(k,v)=>v?`<div><dt>${k}</dt><dd>${esc(v)}</dd></div>`:'';
+function stepper(s){
+ const stage={Submitted:0,'PMC Approved':1,Approved:2,Issued:3,Suspended:3,Closed:5}[s];
+ const names=['PMC review','Safety review','Issue','In force','Closed'];
+ if(stage===undefined)return '';
+ return `<div class="steps">${names.map((n,i)=>`<div class="step ${i<stage?'done':i===stage?'now':''}">${n}</div>`).join('')}</div>`;
+}
+async function openPermit(id){
+ openModal('Work permit','<div class="empty">Loading…</div>');
+ try{
+  const [pr,ar]=await Promise.all([db.from('permits').select('*').eq('id',id).maybeSingle(),db.from('permit_approvals').select('*').eq('permit_id',id).order('created_at')]);
+  if(pr.error||!pr.data)throw new Error(pr.error?.message||'Permit not found or you do not have access.');
+  if(ar.error)throw new Error(ar.error.message);
+  const p=pr.data,hist=ar.data||[],att=Array.isArray(p.attachments)?p.attachments:[];
+  const urls=await signedUrls([...att.map(a=>a.path),p.requester_signature_path,...hist.map(h=>h.signature_path)]);
+  $('modalTitle').textContent=p.permit_number||'Work permit';
+  $('modalBody').innerHTML=`
+   <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap"><span class="pill ${statusClass(p.status)}">${esc(p.status)}</span>${isExpired(p)?'<span class="pill red">Expired</span>':''}<span class="muted small">Version ${esc(p.version||0)}</span></div>
+   ${stepper(p.status)}
+   <dl class="kv">${kv('Type',p.permit_type)}${kv('Location',p.work_location)}${kv('Requester',p.requester_name)}${kv('Company',p.contractor_company)}${kv('Workers',p.workers_count)}${kv('Planned start',dateText(p.planned_start))}${kv('Planned end',dateText(p.planned_end))}${kv('Submitted',dateText(p.submitted_at))}${kv('Issued',dateText(p.issued_at))}${kv('Closed',dateText(p.closed_at))}</dl>
+   <div class="block"><h5>Work description</h5><div class="pre">${esc(p.description)}</div></div>
+   ${p.hazards?`<div class="block"><h5>Hazards</h5><div class="pre">${esc(p.hazards)}</div></div>`:''}
+   ${p.precautions?`<div class="block"><h5>Precautions and controls</h5><div class="pre">${esc(p.precautions)}</div></div>`:''}
+   ${att.length?`<div class="block"><h5>Documents</h5><div class="files">${att.map(a=>urls[a.path]?`<a href="${esc(urls[a.path])}" target="_blank" rel="noopener">${a.kind==='permit_pdf'?'📄 Permit PDF':'📎 Supporting'}: ${esc(a.name)}</a>`:`<span class="muted small">${esc(a.name)} (unavailable)</span>`).join('')}</div></div>`:''}
+   ${p.requester_signature_path&&urls[p.requester_signature_path]?`<div class="block"><h5>Requester signature</h5><img class="sigimg" alt="Requester signature" src="${esc(urls[p.requester_signature_path])}"></div>`:''}
+   <div class="block"><h5>Approval history</h5><div class="timeline">${hist.length?hist.map(h=>`<div class="tl"><b>${esc(ACTION_WORD[h.action]||h.action)}</b> – ${esc(h.actor_name||'User')} (${esc(ROLE_LABEL[h.actor_role]||h.actor_role||'')})<br><span class="muted">${esc(dateText(h.created_at))}${h.permit_version?` • v${esc(h.permit_version)}`:''}</span>${h.comment?`<br>“${esc(h.comment)}”`:''}${h.signature_path&&urls[h.signature_path]?`<br><img class="sigimg" alt="Signature" src="${esc(urls[h.signature_path])}">`:''}</div>`).join(''):'<span class="muted small">No activity recorded yet.</span>'}</div></div>
+   <div id="actionArea"></div>`;
+  renderActions(p);
+ }catch(err){$('modalBody').innerHTML=`<div class="notice error">${esc(err.message)}</div>`;}
+}
+function renderActions(p){
+ const acts=availableActions(p);const canEdit=isOwner(p)&&['Draft','Returned'].includes(p.status);
+ if(!acts.length&&!canEdit){$('actionArea').innerHTML='';return;}
+ $('actionArea').innerHTML=`<div class="btnrow">${canEdit?`<button class="btn" data-edit>${p.status==='Returned'?'Edit & resubmit':'Continue editing'}</button>`:''}${acts.map(a=>`<button class="btn ${['reject','cancel','suspend'].includes(a)?'danger':['pmc_approve','safety_approve','issue'].includes(a)?'green':'secondary'}" data-act="${a}">${LABEL[a]}</button>`).join('')}</div><div id="confirmBox"></div>`;
+ const eb=document.querySelector('[data-edit]');if(eb)eb.onclick=()=>openPermitForm(p);
+ document.querySelectorAll('[data-act]').forEach(b=>b.onclick=()=>confirmAction(p,b.dataset.act));
+}
+function confirmAction(p,act){
+ const box=$('confirmBox');
+ box.innerHTML=`<div class="panel inner"><h4>${LABEL[act]} – ${esc(p.permit_number)}</h4>
+  <div class="field"><label for="actComment">Comment${NEEDS_COMMENT.has(act)?' *':' (optional)'}</label><textarea id="actComment" maxlength="2000"></textarea></div>
+  ${NEEDS_SIG.has(act)?sigBlock('actSig'):''}
+  <div id="actErr" class="notice error hidden"></div>
+  <div class="btnrow"><button class="btn ${['reject','cancel','suspend'].includes(act)?'danger':''}" id="actGo">Confirm</button><button class="btn secondary" id="actNo">Back</button></div></div>`;
+ box.scrollIntoView({block:'nearest',behavior:'smooth'});
+ const pad=NEEDS_SIG.has(act)?makePad($('actSig')):null;
+ $('actNo').onclick=()=>{box.innerHTML='';};
+ $('actGo').onclick=async()=>{
+  const err=m=>{$('actErr').textContent=m;$('actErr').classList.remove('hidden');};
+  const comment=$('actComment').value.trim();
+  if(NEEDS_COMMENT.has(act)&&!comment)return err('A comment is required for this action.');
+  if(pad&&pad.isEmpty())return err('Sign in the box before confirming.');
+  $('actGo').disabled=true;$('actNo').disabled=true;
+  try{
+   let sig=null;if(pad)sig=await uploadFile(p.id,await pad.toBlob(),'signature.png','sig');
+   const to=await rpc('permit_action',{p_id:p.id,p_action:act,p_comment:comment||null,p_signature_path:sig});
+   toast(`${p.permit_number}: ${to}.`,'success');await loadAll();await openPermit(p.id);
+  }catch(e){$('actGo').disabled=false;$('actNo').disabled=false;err(e.message);}
+ };
+}
+
+/* ------------------------------------------------------------------ observations */
+function openObservationForm(){
+ openModal('Add safety observation',`<form id="obsForm" novalidate>
+  <div class="field"><label for="o_title">Title *</label><input id="o_title" maxlength="200" placeholder="Short description"></div>
+  <div class="field"><label for="o_loc">Location *</label><input id="o_loc" maxlength="300" placeholder="Exact location"></div>
+  <div class="row2"><div class="field"><label for="o_cat">Category</label><select id="o_cat"><option>Unsafe Act</option><option selected>Unsafe Condition</option><option>Near Miss</option><option>Good Practice</option><option>Environmental</option></select></div>
+  <div class="field"><label for="o_sev">Severity</label><select id="o_sev"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></div></div>
+  <div class="field"><label for="o_desc">Details and immediate action *</label><textarea id="o_desc" maxlength="4000"></textarea></div>
+  <div id="obsErr" class="notice error hidden"></div>
+  <div class="btnrow"><button class="btn" type="submit" id="obsGo">Submit observation</button><button class="btn secondary" type="button" id="obsNo">Cancel</button></div></form>`);
+ $('obsNo').onclick=closeModal;
+ $('obsForm').onsubmit=async ev=>{
+  ev.preventDefault();const err=m=>{$('obsErr').textContent=m;$('obsErr').classList.remove('hidden');};
+  const p={title:$('o_title').value.trim(),location:$('o_loc').value.trim(),category:$('o_cat').value,severity:$('o_sev').value,description:$('o_desc').value.trim()};
+  if(!p.title||!p.location||!p.description)return err('Title, location and details are required.');
+  $('obsGo').disabled=true;
+  try{await rpc('add_observation',{p});closeModal();toast('Observation submitted.','success');await loadAll();}
+  catch(e){$('obsGo').disabled=false;err(e.message);}
+ };
+}
+function openObservation(id){
+ const o=observations.find(x=>x.id===id);if(!o)return;
+ const canClose=isStaff()&&(o.status||'Open')!=='Closed';
+ openModal(o.title||'Observation',`<div style="display:flex;gap:8px;flex-wrap:wrap"><span class="pill ${statusClass(o.severity)}">${esc(o.severity||'')}</span><span class="pill ${statusClass(o.status)}">${esc(o.status||'Open')}</span></div>
+  <dl class="kv">${kv('Category',o.category)}${kv('Location',o.location)}${kv('Reported by',o.reporter_name)}${kv('Reported',dateText(o.created_at))}${kv('Closed',dateText(o.closed_at))}</dl>
+  <div class="block"><h5>Details</h5><div class="pre">${esc(o.description)}</div></div>
+  ${o.action_taken?`<div class="block"><h5>Corrective action taken</h5><div class="pre">${esc(o.action_taken)}</div></div>`:''}
+  ${canClose?`<div class="panel inner"><h4>Close observation</h4><div class="field"><label for="o_act">Corrective action taken *</label><textarea id="o_act" maxlength="2000"></textarea></div><div id="closeErr" class="notice error hidden"></div><div class="btnrow"><button class="btn green" id="closeObs">Close observation</button></div></div>`:''}`);
+ if(canClose)$('closeObs').onclick=async()=>{
+  const t=$('o_act').value.trim();const err=m=>{$('closeErr').textContent=m;$('closeErr').classList.remove('hidden');};
+  if(!t)return err('Describe the corrective action taken.');
+  $('closeObs').disabled=true;
+  try{await rpc('close_observation',{p_id:id,p_action_taken:t});closeModal();toast('Observation closed.','success');await loadAll();}
+  catch(e){$('closeObs').disabled=false;err(e.message);}
+ };
+}
+
+/* ------------------------------------------------------------------ users (admin) */
+async function loadUsers(){
+ if(profile.role!=='admin')return;
+ const {data,error}=await db.from('profiles').select('*').order('role').order('full_name');
+ if(error){toast(error.message,'error');return;}
+ users=data||[];renderUsers();
+}
+function renderUsers(){
+ const t=($('userSearch').value||'').toLowerCase().trim();
+ const rows=users.filter(u=>!t||[u.full_name,u.email,u.company].some(x=>String(x||'').toLowerCase().includes(t)));
+ $('userList').innerHTML=rows.length?rows.map(u=>{const me=u.id===user.id;return `<article class="record usercard" data-uid="${esc(u.id)}"><div><h4>${esc(u.full_name||u.email)}${me?' (you)':''}</h4><p>${esc(u.email||'')}</p></div>
+  <div class="usercontrols">
+   <input data-f="full_name" value="${esc(u.full_name||'')}" placeholder="Full name" aria-label="Full name">
+   <select data-f="role" aria-label="Role" ${me?'disabled':''}>${Object.entries(ROLE_LABEL).map(([k,l])=>`<option value="${k}" ${u.role===k?'selected':''}>${l}</option>`).join('')}</select>
+   <input data-f="company" value="${esc(u.company||'')}" placeholder="Company" aria-label="Company">
+   <label class="chk"><input type="checkbox" data-f="active" ${u.active?'checked':''} ${me?'disabled':''}> Active</label>
+   <button class="btn" data-save>Save</button></div></article>`;}).join(''):'<div class="empty">No users found.</div>';
+ document.querySelectorAll('#userList [data-save]').forEach(b=>b.onclick=async()=>{
+  const card=b.closest('[data-uid]'),g=f=>card.querySelector(`[data-f="${f}"]`);
+  b.disabled=true;
+  try{await rpc('admin_update_user',{p_id:card.dataset.uid,p_role:g('role').value,p_active:g('active').checked,p_company:g('company').value,p_name:g('full_name').value});toast('User saved.','success');await loadUsers();}
+  catch(e){toast(e.message,'error');}finally{b.disabled=false;}
+ });
+}
+$('userSearch').oninput=renderUsers;
+
+/* ------------------------------------------------------------------ wiring */
+$('permitSearch').oninput=renderPermitList;$('permitStatus').onchange=renderPermitList;
+$('raiseBtn').onclick=$('raiseBtn2').onclick=()=>openPermitForm(null);
+$('observationBtn').onclick=$('observationBtn2').onclick=openObservationForm;
+$('refreshBtn').onclick=$('refreshDataBtn').onclick=async()=>{try{await loadAll();if(activeTab==='users')await loadUsers();toast('Data refreshed.','success');}catch(e){toast(e.message,'error');}};
+document.querySelectorAll('[data-goto]').forEach(b=>b.onclick=()=>setTab(b.dataset.goto));
+$('markReadBtn').onclick=async()=>{try{await rpc('mark_notifications_read');await loadAll();toast('Notifications marked as read.','success');}catch(e){toast(e.message,'error');}};
+document.addEventListener('visibilitychange',()=>{if(!document.hidden&&user)pollNotifications();});
+
+boot().catch(e=>{show('authView');inlineMsg('authMsg','Startup error: '+(e?.message||String(e)),'error');});
+})();
+</script>
+</body>
+</html>
