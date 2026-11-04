@@ -1,0 +1,209 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b1422">
+<title>Work Permit System</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0b1422;--blue:#2864e8;--blue2:#eaf1ff;--ink:#172235;--muted:#718096;--line:#e4eaf1;--bg:#f3f6fa;--white:#fff;--green:#13865c;--red:#c33b4b;--shadow:0 12px 34px rgba(25,45,75,.07)}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);padding-bottom:88px}
+button,input,select,textarea{font:inherit}button{cursor:pointer}
+.top{background:var(--navy);color:#fff;padding:22px 20px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px;position:sticky;top:0;z-index:5}
+.brand{display:flex;align-items:center;gap:13px}.logo{width:48px;height:48px;border-radius:16px;background:linear-gradient(145deg,#16b9dc,#2864e8);display:grid;place-items:center;font-size:24px;color:#fff;box-shadow:0 8px 18px #0b63c955}.brand h1{font-size:18px;letter-spacing:.04em;margin:0;font-weight:800}.brand p{font-size:11px;letter-spacing:.22em;color:#aab8ce;margin:7px 0 0}.top-actions{display:flex;gap:8px}.iconbtn{width:46px;height:46px;border:1px solid #344154;border-radius:15px;background:#142033;color:#fff;font-size:20px}
+main{max-width:1100px;margin:auto;padding:25px 18px}.eyebrow{font-size:12px;letter-spacing:.2em;color:var(--blue);font-weight:800}.hero h2{font-size:clamp(27px,5vw,38px);margin:12px 0 8px;letter-spacing:-.045em}.hero p{margin:0;color:var(--muted);font-size:16px;line-height:1.55}
+.stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:13px;margin:26px 0 18px}.stat{background:#fff;border:1px solid var(--line);border-radius:25px;padding:19px 17px;box-shadow:var(--shadow);min-height:142px}.stathead{display:flex;justify-content:space-between;align-items:center;color:var(--muted);font-size:13px;font-weight:700}.staticon{width:42px;height:42px;border-radius:15px;background:var(--blue2);color:var(--blue);display:grid;place-items:center;font-size:20px}.stat strong{display:block;font-size:31px;margin:12px 0 5px}.stat small{color:var(--muted);font-size:12px}
+.actions{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:18px 0 26px}.action{border:1px solid var(--line);background:#fff;border-radius:18px;padding:15px 8px;font-weight:800;color:#34445a;min-height:68px;box-shadow:0 5px 15px #182b4610}.action.primary{background:var(--blue);color:#fff;border-color:var(--blue);box-shadow:0 10px 20px #2864e82b}
+.tabs{display:flex;overflow:auto;gap:24px;border-bottom:1px solid var(--line);white-space:nowrap;margin:10px 0 20px}.tab{border:0;background:none;padding:15px 8px;color:#77869a;font-weight:750;border-bottom:3px solid transparent}.tab.active{color:var(--blue);border-color:var(--blue)}
+.panel{background:#fff;border:1px solid var(--line);border-radius:22px;padding:18px;box-shadow:var(--shadow);margin-bottom:16px}.panelhead{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}.panel h3{margin:0;font-size:17px}.muted{color:var(--muted)}.list{display:grid;gap:10px}.record{border:1px solid var(--line);border-radius:16px;padding:14px;display:flex;justify-content:space-between;gap:12px;align-items:flex-start}.record h4{margin:0 0 6px;font-size:14px}.record p{margin:0;color:var(--muted);font-size:12px;line-height:1.5}.pill{display:inline-block;padding:6px 9px;border-radius:999px;background:#edf2f8;color:#53647a;font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:.04em}.pill.green{background:#e4f6ee;color:#13784f}.pill.orange{background:#fff2dc;color:#9a5b00}.pill.red{background:#ffeaec;color:#b52d3e}
+.field{display:grid;gap:7px;margin:13px 0}.field label{font-size:12px;font-weight:750;color:#526176}.field input,.field select,.field textarea{width:100%;border:1px solid #dce4ee;background:#fbfcfe;border-radius:13px;padding:13px;color:var(--ink);outline:none}.field textarea{min-height:90px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:#7ea4f7;box-shadow:0 0 0 3px #2864e818}
+.btn{border:0;border-radius:13px;padding:13px 17px;background:var(--blue);color:#fff;font-weight:800}.btn.secondary{background:#edf2f8;color:#34445a}.btn.danger{background:#fff0f1;color:var(--red)}.btnrow{display:flex;gap:9px;flex-wrap:wrap;margin-top:14px}.hidden{display:none!important}.notice{padding:12px 14px;border-radius:13px;background:#edf3ff;color:#315ca8;font-size:12px;line-height:1.5;margin:12px 0}.error{background:#fff0f1;color:#a92e3e}.success{background:#e8f7ef;color:#14764f}
+.auth{max-width:460px;margin:45px auto}.auth h2{margin-top:0}.empty{text-align:center;color:var(--muted);padding:30px 12px;font-size:13px}.bottom{position:fixed;bottom:0;left:0;right:0;background:#ffffffef;backdrop-filter:blur(16px);border-top:1px solid var(--line);display:grid;grid-template-columns:repeat(4,1fr);padding:9px 8px calc(9px + env(safe-area-inset-bottom));z-index:8}.bottom button{border:0;background:none;color:#8290a3;font-size:11px;font-weight:750;padding:6px}.bottom button span{display:block;font-size:21px;margin-bottom:4px}.bottom button.active{color:var(--blue)}
+.modalback{position:fixed;inset:0;background:#09132299;z-index:20;display:grid;place-items:end center;padding:14px}.modal{background:#fff;border-radius:25px 25px 18px 18px;width:min(100%,620px);max-height:88vh;overflow:auto;padding:22px;box-shadow:0 20px 60px #0004}.modalhead{display:flex;justify-content:space-between;align-items:center}.modalhead h3{margin:0}.close{border:0;background:#edf2f8;border-radius:12px;padding:8px 12px;font-size:18px}
+@media(min-width:760px){.stats{grid-template-columns:repeat(4,1fr)}.actions{max-width:650px}.modalback{place-items:center}.modal{border-radius:24px}}
+</style>
+</head>
+<body>
+<header class="top">
+ <div class="brand"><div class="logo">✦</div><div><h1>WORK PERMIT SYSTEM</h1><p>SAFETY • CONTROL • COMPLIANCE</p></div></div>
+ <div class="top-actions"><button class="iconbtn" id="refreshBtn" aria-label="Refresh">↻</button></div>
+</header>
+<main>
+ <section id="authView" class="auth panel">
+  <h2>Sign in</h2><p class="muted">Sign in with your Work Permit System account.</p>
+  <form id="loginForm">
+   <div class="field"><label>Email</label><input id="email" type="email" required autocomplete="username"></div>
+   <div class="field"><label>Password</label><input id="password" type="password" required autocomplete="current-password"></div>
+   <button class="btn" style="width:100%">Sign in</button>
+  </form><div id="authMsg" class="notice hidden"></div>
+ </section>
+ <section id="appView" class="hidden">
+  <div class="hero"><div class="eyebrow">OPERATIONAL OVERVIEW</div><h2 id="pageTitle">Worksite dashboard</h2><p id="pageSubtitle">Monitor permits, observations and approval activity in one place.</p></div>
+  <div class="stats">
+   <div class="stat"><div class="stathead">Total permits <span class="staticon">▤</span></div><strong id="totalPermits">—</strong><small>Visible in your assigned scope</small></div>
+   <div class="stat"><div class="stathead">Pending review <span class="staticon">◷</span></div><strong id="pendingPermits">—</strong><small>Awaiting an action</small></div>
+   <div class="stat"><div class="stathead">Approved / issued <span class="staticon">✓</span></div><strong id="approvedPermits">—</strong><small>Approved or issued permits</small></div>
+   <div class="stat"><div class="stathead">Observations <span class="staticon">⚑</span></div><strong id="totalObs">—</strong><small>Visible observation records</small></div>
+  </div>
+  <div class="actions">
+   <button class="action primary" id="raiseBtn">＋ Raise<br>work permit</button>
+   <button class="action" id="observationBtn">＋ Add<br>observation</button>
+   <button class="action" id="refreshDataBtn">↻ Refresh<br>data</button>
+  </div>
+  <nav class="tabs">
+   <button class="tab active" data-tab="dashboard">Dashboard</button>
+   <button class="tab" data-tab="permits">Work permits</button>
+   <button class="tab" data-tab="observations">Observations</button>
+   <button class="tab" data-tab="notifications">Notifications</button>
+  </nav>
+  <section id="dashboardPanel">
+   <div class="panel"><div class="panelhead"><h3>Recent work permits</h3><button class="btn secondary" data-goto="permits">View all</button></div><div id="recentPermits" class="list"><div class="empty">Loading permits…</div></div></div>
+   <div class="panel"><div class="panelhead"><h3>Recent observations</h3><button class="btn secondary" data-goto="observations">View all</button></div><div id="recentObs" class="list"><div class="empty">Loading observations…</div></div></div>
+  </section>
+  <section id="permitsPanel" class="hidden"><div class="panel"><div class="panelhead"><h3>Work permits</h3><button class="btn" id="raiseBtn2">＋ New permit</button></div><div id="permitList" class="list"><div class="empty">Loading…</div></div></div></section>
+  <section id="observationsPanel" class="hidden"><div class="panel"><div class="panelhead"><h3>Safety observations</h3><button class="btn" id="observationBtn2">＋ Add</button></div><div id="observationList" class="list"><div class="empty">Loading…</div></div></div></section>
+  <section id="notificationsPanel" class="hidden"><div class="panel"><div class="panelhead"><h3>Notifications</h3><button class="btn secondary" id="markReadBtn">Mark visible as read</button></div><div id="notificationList" class="list"><div class="empty">Loading…</div></div></div></section>
+  <div class="panel" style="margin-top:18px"><div class="panelhead"><h3 id="userLabel">Signed in</h3><button class="btn danger" id="signOutBtn">Sign out</button></div><p class="muted" id="scopeLabel" style="font-size:12px;margin:0">Loading assigned project and area…</p></div>
+ </section>
+ <div id="globalMsg" class="notice hidden"></div>
+</main>
+<nav class="bottom hidden" id="bottomNav">
+ <button class="active" data-tab="dashboard"><span>⌂</span>Home</button><button data-tab="permits"><span>▤</span>Permits</button><button data-tab="observations"><span>⚑</span>Safety</button><button data-tab="notifications"><span>♧</span>Alerts</button>
+</nav>
+<div id="modalBack" class="modalback hidden"><div class="modal"><div class="modalhead"><h3 id="modalTitle">New record</h3><button class="close" id="closeModal">✕</button></div><div id="modalBody"></div></div></div>
+<script>
+(async () => {
+'use strict';
+const SUPABASE_URL = 'https://pnpvfaveaautvmzuahoh.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_v0JmfgjC2Fi1KG5nUw-hrw_babSM3Ig';
+const $ = id => document.getElementById(id);
+function loadSupabaseSdk(url){return new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=url;script.onload=()=>window.supabase?resolve():reject(new Error('Supabase library loaded but did not initialize'));script.onerror=()=>reject(new Error('Could not load '+url));document.head.appendChild(script);});}
+try {
+  if(!window.supabase){try{await loadSupabaseSdk('https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.min.js');}catch(firstError){await loadSupabaseSdk('https://unpkg.com/@supabase/supabase-js@2/dist/umd/supabase.min.js');}}
+} catch(sdkError) {
+  $('authView').classList.remove('hidden');
+  $('appView').classList.add('hidden');
+  $('bottomNav').classList.add('hidden');
+  $('authMsg').textContent='The sign-in service could not start because the Supabase JavaScript library could not be downloaded. Open this page from your GitHub Pages website with an internet connection, then refresh. Details: '+sdkError.message;
+  $('authMsg').className='notice error';
+  return;
+}
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+let currentUser=null, membership=null, permits=[], observations=[], notifications=[];
+let activeTab='dashboard';
+const esc = v => String(v ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+const showMsg=(message,type='')=>{const el=$('globalMsg');el.textContent=message;el.className='notice '+type;el.classList.remove('hidden');};
+const hideMsg=()=> $('globalMsg').classList.add('hidden');
+const first=(obj,keys,fallback='')=>{for(const k of keys)if(obj && obj[k]!==undefined && obj[k]!==null && obj[k]!=='')return obj[k];return fallback};
+const statusClass=s=>{s=String(s||'').toLowerCase();return /approv|issued|closed|completed/.test(s)?'green':/reject|cancel|overdue/.test(s)?'red':'orange'};
+const dateText=v=>{if(!v)return '';const d=new Date(v);return isNaN(d)?String(v):d.toLocaleString([], {dateStyle:'medium',timeStyle:'short'});};
+function setTab(tab){
+ activeTab=tab;
+ ['dashboard','permits','observations','notifications'].forEach(t=>{$(t+'Panel').classList.toggle('hidden',t!==tab)});
+ document.querySelectorAll('[data-tab]').forEach(b=>b.classList.toggle('active',b.dataset.tab===tab));
+ $('pageTitle').textContent=({dashboard:'Worksite dashboard',permits:'Work permits',observations:'Safety observations',notifications:'Notifications'})[tab];
+ $('pageSubtitle').textContent=({dashboard:'Monitor permits, observations and approval activity in one place.',permits:'Review work permits visible within your assigned project and area.',observations:'Record and follow up workplace safety observations.',notifications:'Updates for your assigned worksite.'})[tab];
+}
+function recordCard(row,type){
+ const title=type==='permit'?first(row,['permit_number','ptw_number','reference_no','title','id'],'Work permit'):first(row,['title','observation_title','observation_number','id'],'Safety observation');
+ const sub=[first(row,['permit_type','category','work_type','severity']),first(row,['work_location','location','area_name']),dateText(first(row,['created_at','submitted_at']))].filter(Boolean).join(' • ');
+ const status=first(row,['status','approval_status'],'Submitted');
+ return `<article class="record"><div><h4>${esc(title)}</h4><p>${esc(sub||'Record details')}</p></div><span class="pill ${statusClass(status)}">${esc(status)}</span></article>`;
+}
+function renderList(id,rows,type){
+ const el=$(id);if(!rows.length){el.innerHTML='<div class="empty">No records found in your assigned scope.</div>';return;}
+ el.innerHTML=rows.map(r=>recordCard(r,type)).join('');
+}
+async function loadMembership(){
+ const {data,error}=await db.from('project_memberships').select('*').eq('user_id',currentUser.id).eq('active',true).limit(1);
+ if(error)throw new Error('Could not load project membership: '+error.message);
+ if(!data?.length)throw new Error('No active project membership is linked to this account. Ask the project administrator to assign your account.');
+ membership=data[0];
+ $('scopeLabel').textContent=`Role: ${membership.role||'Member'} • Project: ${membership.project_id||'—'} • Area: ${membership.area_id||'—'}`;
+}
+async function loadRows(){
+ hideMsg();
+ const p=await db.from('permits').select('*').order('created_at',{ascending:false}).limit(100);
+ if(p.error)throw new Error('Permits could not load: '+p.error.message);
+ permits=p.data||[];
+ const o=await db.from('daily_observations').select('*').order('created_at',{ascending:false}).limit(100);
+ if(o.error)throw new Error('Observations could not load: '+o.error.message);
+ observations=o.data||[];
+ const n=await db.from('ehs_notifications').select('*').order('created_at',{ascending:false}).limit(100);
+ if(n.error && !/does not exist|schema cache/i.test(n.error.message))throw new Error('Notifications could not load: '+n.error.message);
+ notifications=n.data||[];
+ $('totalPermits').textContent=permits.length;
+ $('pendingPermits').textContent=permits.filter(r=>/pending|submitted|review|await/i.test(String(first(r,['status','approval_status'],'')))).length;
+ $('approvedPermits').textContent=permits.filter(r=>/approv|issued/i.test(String(first(r,['status','approval_status'],'')))).length;
+ $('totalObs').textContent=observations.length;
+ renderList('recentPermits',permits.slice(0,4),'permit');renderList('permitList',permits,'permit');
+ renderList('recentObs',observations.slice(0,4),'observation');renderList('observationList',observations,'observation');
+ renderNotifications();
+}
+function renderNotifications(){
+ const el=$('notificationList');if(!notifications.length){el.innerHTML='<div class="empty">No notifications yet.</div>';return;}
+ el.innerHTML=notifications.map(n=>`<article class="record"><div><h4>${esc(first(n,['subject','title','event_type'],'Update'))}</h4><p>${esc(first(n,['message','body'],'Notification'))}<br>${esc(dateText(n.created_at))}</p></div><span class="pill ${n.read_at?'':'orange'}">${n.read_at?'Read':'New'}</span></article>`).join('');
+}
+function openModal(kind){
+ $('modalTitle').textContent=kind==='permit'?'Raise work permit':'Add safety observation';
+ const isPermit=kind==='permit';
+ $('modalBody').innerHTML=`<form id="recordForm">
+ ${isPermit?`<div class="field"><label>Permit number</label><input name="permit_number" placeholder="Auto / enter reference"></div>
+ <div class="field"><label>Permit type *</label><select name="permit_type" required><option value="">Select type</option><option>Hot Work</option><option>Work at Height</option><option>Confined Space</option><option>Electrical Work</option><option>Excavation</option><option>General Work</option><option>Other</option></select></div>
+ <div class="field"><label>Work location *</label><input name="work_location" required placeholder="Work location"></div>
+ <div class="field"><label>Work description *</label><textarea name="description" required placeholder="Describe the planned work"></textarea></div>
+ <div class="field"><label>Planned start</label><input name="planned_start" type="datetime-local"></div>
+ <div class="field"><label>Planned end</label><input name="planned_end" type="datetime-local"></div>`:
+ `<div class="field"><label>Observation title *</label><input name="title" required placeholder="Short description"></div>
+ <div class="field"><label>Location *</label><input name="location" required placeholder="Exact location"></div>
+ <div class="field"><label>Category</label><select name="category"><option>Unsafe Act</option><option>Unsafe Condition</option><option>Near Miss</option><option>Good Practice</option><option>Environmental</option></select></div>
+ <div class="field"><label>Severity</label><select name="severity"><option>Low</option><option selected>Medium</option><option>High</option><option>Critical</option></select></div>
+ <div class="field"><label>Observation details *</label><textarea name="description" required placeholder="Describe the observation and immediate action"></textarea></div>`}
+ <div class="notice">Your account, project and area are attached automatically. Database access rules control which roles can view or submit records.</div>
+ <div class="btnrow"><button class="btn" type="submit">${isPermit?'Submit permit':'Submit observation'}</button><button class="btn secondary" type="button" id="cancelRecord">Cancel</button></div>
+ </form>`;
+ $('modalBack').classList.remove('hidden');
+ $('cancelRecord').onclick=closeModal;
+ $('recordForm').onsubmit=e=>submitRecord(e,kind);
+}
+function closeModal(){$('modalBack').classList.add('hidden')}
+async function submitRecord(e,kind){
+ e.preventDefault();const form=e.currentTarget;const fd=new FormData(form);const v=Object.fromEntries(fd.entries());
+ const base={project_id:membership.project_id,area_id:membership.area_id,created_by:currentUser.id,status:'Submitted'};
+ let payload;
+ if(kind==='permit'){
+  payload={...base,permit_number:v.permit_number||null,permit_type:v.permit_type,work_location:v.work_location,description:v.description,planned_start:v.planned_start||null,planned_end:v.planned_end||null};
+ }else{
+  payload={...base,title:v.title,location:v.location,category:v.category,severity:v.severity,description:v.description};
+ }
+ const table=kind==='permit'?'permits':'daily_observations';
+ const {error}=await db.from(table).insert(payload);
+ if(error){showMsg(`Could not save ${kind}: ${error.message}. The form's column names must match your database table.`, 'error');return;}
+ closeModal();showMsg(kind==='permit'?'Work permit submitted.':'Safety observation submitted.','success');
+ await loadRows();
+}
+async function boot(){
+ const {data:{session}}=await db.auth.getSession();
+ if(!session){$('authView').classList.remove('hidden');$('appView').classList.add('hidden');$('bottomNav').classList.add('hidden');return;}
+ currentUser=session.user;$('authView').classList.add('hidden');$('appView').classList.remove('hidden');$('bottomNav').classList.remove('hidden');
+ $('userLabel').textContent=currentUser.email||'Signed in';
+ try{await loadMembership();await loadRows();}catch(e){showMsg(e.message,'error');}
+}
+$('loginForm').onsubmit=async e=>{e.preventDefault();$('authMsg').classList.add('hidden');const {error}=await db.auth.signInWithPassword({email:$('email').value,password:$('password').value});if(error){$('authMsg').textContent=error.message;$('authMsg').className='notice error';return;}await boot();};
+$('signOutBtn').onclick=async()=>{await db.auth.signOut();location.reload()};
+$('refreshBtn').onclick=$('refreshDataBtn').onclick=async()=>{try{await loadMembership();await loadRows();showMsg('Data refreshed.','success')}catch(e){showMsg(e.message,'error')}};
+$('raiseBtn').onclick=$('raiseBtn2').onclick=()=>openModal('permit');
+$('observationBtn').onclick=$('observationBtn2').onclick=()=>openModal('observation');
+$('closeModal').onclick=closeModal;
+document.querySelectorAll('[data-tab]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.tab)));
+document.querySelectorAll('[data-goto]').forEach(b=>b.addEventListener('click',()=>setTab(b.dataset.goto)));
+$('markReadBtn').onclick=async()=>{const unread=notifications.filter(n=>!n.read_at);for(const n of unread){const {error}=await db.from('ehs_notifications').update({read_at:new Date().toISOString()}).eq('id',n.id);if(error){showMsg('Could not mark notifications read: '+error.message,'error');return;}}await loadRows();showMsg('Notifications marked as read.','success')};
+db.auth.onAuthStateChange(()=>{setTimeout(boot,0)});
+boot().catch(err=>{ $('authView').classList.remove('hidden'); $('appView').classList.add('hidden'); $('bottomNav').classList.add('hidden'); $('authMsg').textContent='Startup error: '+(err?.message||String(err)); $('authMsg').className='notice error'; });
+})();
+</script>
+</body>
+</html>
